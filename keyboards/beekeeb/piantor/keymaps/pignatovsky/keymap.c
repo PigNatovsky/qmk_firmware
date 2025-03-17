@@ -3,14 +3,12 @@
 #define _NUMS 1
 #define _SIGNS 2
 
-// Poprawna deklaracja enuma tap dance
 enum tap_dance_codes {
     TD_RALT_LALT,
     TD_LCTRL_LGUI,
     TD_LGUI_LCTRL,
 };
 
-// Definicje funkcji dla tap dance
 void td_ralt_lalt_finished(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         register_code(KC_RALT);
@@ -59,7 +57,6 @@ void td_lgui_lctrl_reset(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-// Tablica akcji tap dance
 tap_dance_action_t tap_dance_actions[] = {
     [TD_RALT_LALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_ralt_lalt_finished, td_ralt_lalt_reset),
     [TD_LCTRL_LGUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lctrl_lgui_finished, td_lctrl_lgui_reset),
@@ -71,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y, KC_U, KC_I, KC_O, KC_SCLN, KC_EQL,
 KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G,  KC_H, KC_J, KC_K, KC_L, KC_P, KC_QUOT,
 KC_LALT, KC_Z, KC_X, KC_C, KC_V, KC_B,  KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_BSLS,
-TD(TD_LGUI_LCTRL), MO(_NUMS), KC_LSFT,             TD(TD_RALT_LALT), MO(_SIGNS), TD(TD_LCTRL_LGUI)
+TD(TD_LGUI_LCTRL), KC_LSFT, MO(_NUMS),               MO(_SIGNS), TD(TD_RALT_LALT), TD(TD_LCTRL_LGUI)
     ),
     [_NUMS] = LAYOUT_split_3x6_3(
 KC_TAB, KC_1, KC_2, KC_3, KC_4, KC_5,  KC_KB_MUTE, KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, KC_9, KC_0, KC_EQL,
@@ -80,13 +77,16 @@ KC_GRV, KC_Z, KC_X, KC_C, KC_V, KC_B,  KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_
 KC_LGUI, KC_BSPC, KC_LSFT,             KC_RALT, KC_SPC, KC_LCTL
     ),
     [_SIGNS] = LAYOUT_split_3x6_3(
-KC_TAB, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC,  KC_CIRC, KC_AMPR, KC_ASTR, KC_9, KC_0, KC_EQL,
+KC_TAB, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5,  KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_EQL,
 KC_ESC, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC,  KC_CIRC, KC_AMPR, KC_ASTR, MT(MOD_LCTL, KC_L), MT(MOD_LGUI, KC_P), KC_QUOT,
-KC_GRV, KC_Z, KC_X, KC_C, KC_V, KC_B,  KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_BSLS,
+KC_GRV, KC_F11, KC_F12, KC_C, KC_V, KC_B,  KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_BSLS,
 KC_LGUI, KC_BSPC, KC_LSFT,             KC_RALT, KC_SPC, KC_LCTL
     ),
 };
 
+const uint16_t PROGMEM equal[] = {KC_O, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM quote[] = {KC_L, KC_P, COMBO_END};
+const uint16_t PROGMEM backslash[] = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM left_paren[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM right_paren[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM lp1[] = {KC_E, KC_R, COMBO_END};
@@ -129,4 +129,7 @@ combo_t key_combos[] = {
         COMBO(ecs, KC_ESC),
         COMBO(space, KC_SPC),
         COMBO(bkspace, KC_BSPC),
+        COMBO(equal, KC_EQL),
+        COMBO(backslash, KC_BSLS),
+        COMBO(quote, KC_QUOT)
 };
